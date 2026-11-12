@@ -1,0 +1,151 @@
+# Schema: https://github.com/mathlib-initiative/formalization.yaml
+version: "v0.3"
+
+project:
+  name: "Erdős Problem 361 — forbidden subset sums in a linear range, in Lean 4"
+  authors:
+    - "Mateo Matijasevick"
+  license: "Apache-2.0"
+
+sources:
+  - title: "Forbidden subset sums in a linear range: an inverse theorem and the Erdős–Graham irregularity problem"
+    authors:
+      - "Mateo Matijasevick"
+    id: "paper/erdos361_paper.pdf"
+    type: "manuscript"
+    license: "n/a"
+    author_contacted: "n/a"
+    note: >-
+      The statements of Challenge.lean formalize Theorem 1.1 (formula and limit form), the
+      representation statement of Theorem 1.2 for q = snd(s) ∈ {2,3}, Theorem 1.4(i), the limits of
+      Theorem 1.4(ii) along snd(n) = q for q ∈ {2,3}, and the non-convergence of f_c(n)/n for
+      0 < c < 1 (through Corollary 1.5 for q ∈ {2,3}, and through the zero-sum route of Section 6).
+      The problem statement of record is https://www.erdosproblems.com/361.
+  - title: "Subset Sums"
+    authors:
+      - "Noga Alon"
+    id: "J. Number Theory 27 (1987) 196–205"
+    type: "literature"
+    license: "n/a"
+    author_contacted: "n/a"
+    note: >-
+      Theorem 1.1 (bounded zero-sums in ℤ/Nℤ) is used over a prime modulus only and is proved
+      in-project in Erdos361/Core.lean, via the Dias da Silva–Hamidoune bound derived from
+      Mathlib's Combinatorial Nullstellensatz. Corollary 2.6 is the case s = 2, E = T of the
+      inverse theorem.
+  - title: "On addition of two distinct sets of integers"
+    authors:
+      - "Vsevolod F. Lev"
+      - "Pavel Y. Smeliansky"
+    id: "Acta Arith. 70 (1995) 85–91, Theorem 1 (attrib. Freiman, the 3k-3 theorem)"
+    type: "literature"
+    license: "n/a"
+    author_contacted: "n/a"
+    note: >-
+      Freiman's 3k-3 lower bound |B+B| ≥ min{L, 2|B|-3} + |B|. It is proved from scratch in
+      Erdos361/Freiman.lean (Erdos361Freiman.freiman_3k3), following the large-diameter induction
+      of Nathanson, Additive Number Theory: Inverse Problems (GTM 165), Chapter 1.
+
+status:
+  scope: >-
+    Lean 4 + Mathlib formalization of the Erdős–Graham irregularity question for
+    f_c(n) = max{|A| : A ⊆ [1,⌊cn⌋], n ∉ Σ(A)}: the formula for c ≥ 1, the lim sup c/2, the limits
+    along the classes snd(n) = q for q ∈ {2,3}, non-convergence for every c ∈ (0,1), and the inverse
+    theorem for q ∈ {2,3}. All eleven statements are axiom-free. Thresholds are existential
+    (∃ E₀, ∃ N₀). The sorry counts exclude Challenge.lean (the statement-only Comparator fixture,
+    11 intentional placeholders).
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms:
+    - "propext"
+    - "Classical.choice"
+    - "Quot.sound"
+  main_results:
+    - declaration: "Erdos361.Statement.erdos361_cge1"
+      proved_from: "Erdos361.erdos361_cge1 (Erdos361/Core.lean)"
+    - declaration: "Erdos361.Statement.erdos361_cge1_limit"
+      proved_from: "Erdos361Asymptotics.Fc_limit_cge1 (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.erdos361_irregular"
+      proved_from: "Erdos361.erdos361_irregular (Erdos361/Core.lean)"
+    - declaration: "Erdos361.Statement.erdos361_upper_half"
+      proved_from: "Erdos361Asymptotics.Fc_upper_s1 (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.erdos361_odd_limit"
+      proved_from: "Erdos361Asymptotics.Fc_limit_odd (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.erdos361_mod6_limit_low"
+      proved_from: "Erdos361Asymptotics.Fc_limit_mod6_low (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.erdos361_mod6_limit_high"
+      proved_from: "Erdos361Asymptotics.Fc_limit_mod6_high (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.erdos361_two_limit_points"
+      proved_from: "Erdos361Asymptotics.Fc_two_limit_points (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.inverse_s1"
+      proved_from: "Erdos361Asymptotics.inverse_s1 (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.inverse_s2"
+      proved_from: "Erdos361Asymptotics.inverse_s2 (Erdos361/Asymptotics.lean)"
+    - declaration: "Erdos361.Statement.inverse_s2_restricted"
+      proved_from: "Erdos361InverseMain.inverse_restricted (Erdos361/InverseMain.lean)"
+  main_results_common:
+    sorry_count: 0
+    axioms: ["propext", "Classical.choice", "Quot.sound"]
+    comparator_config: "comparator/all.json"
+    literature_dependencies: []
+
+automation:
+  proof_assistant: "Lean 4 (v4.31.0)"
+  mathlib: "rev fabf563a7c95a166b8d7b6efca11c8b4dc9d911f (tag v4.31.0)"
+
+fidelity:
+  divergences:
+    - "Theorem 1.2 is formalized for q = snd(s) ∈ {2,3} in the form: |A| ≥ (1/q + ε)E implies that
+       every t ∈ [2^(q-2)E, KE] (with 2 | t when q = 3) is a subset sum. The deduction of the
+       stated form and the bound on the number of summands are not formalized; q ≥ 4 is not
+       formalized."
+    - "Theorem 1.4(ii) is formalized for q ∈ {2,3}. Corollary 1.6 (the exact set of limit points
+       at c = 1/2), Proposition 3.1 and the numerics of Section 7 are not formalized."
+    - "Thresholds are existential, not explicit."
+
+review:
+  comparator: >-
+    Configurations are in comparator/ (all.json covers all eleven statements). Comparator is
+    Linux-only and was not run for this release; VERIFICATION.md records the local build, the
+    axiom reports and a source-level comparison of the Challenge and Solution statements.
+
+alignment:
+  statements:
+    - paper_result: "Theorem 1.1, formula F(M,n) = M − ⌈n/2⌉"
+      lean_name: "Erdos361.Statement.erdos361_cge1"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.1, limit f_c(n)/n → c − 1/2 for c ≥ 1"
+      lean_name: "Erdos361.Statement.erdos361_cge1_limit"
+      status: "proved, axiom-free"
+    - paper_result: "non-convergence of f_c(n)/n for 0 < c < 1 (Section 6 route)"
+      lean_name: "Erdos361.Statement.erdos361_irregular"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.4(i), upper bound"
+      lean_name: "Erdos361.Statement.erdos361_upper_half"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.4(i), limit c/2 along odd n"
+      lean_name: "Erdos361.Statement.erdos361_odd_limit"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.4(ii), q = 3, 0 < c ≤ 1/2"
+      lean_name: "Erdos361.Statement.erdos361_mod6_limit_low"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.4(ii), q = 3, 1/2 < c < 1"
+      lean_name: "Erdos361.Statement.erdos361_mod6_limit_high"
+      status: "proved, axiom-free"
+    - paper_result: "Corollary 1.5 for q ∈ {2,3}"
+      lean_name: "Erdos361.Statement.erdos361_two_limit_points"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.2, q = 2"
+      lean_name: "Erdos361.Statement.inverse_s1"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.2, q = 3"
+      lean_name: "Erdos361.Statement.inverse_s2"
+      status: "proved, axiom-free"
+    - paper_result: "Theorem 1.2, s = 2, 2E < sT < 3E, 3 ∤ sT"
+      lean_name: "Erdos361.Statement.inverse_s2_restricted"
+      status: "proved, axiom-free"
+
+acknowledgements: >-
+  Modular-dichotomy and divisor-sensitive arguments from the ChatGPT/GPT-5 collaboration
+  (including the |B| ≤ k / floor-constant endpoint correction, verified against the Alon
+  source); Lean formalization by the Claude side of the harness.

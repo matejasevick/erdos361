@@ -1,0 +1,26 @@
+{
+    "challenge_module": "Challenge",
+    "solution_module": "Solution",
+    "theorem_names": [
+        "Erdos361.Statement.erdos361_cge1_limit",
+        "Erdos361.Statement.erdos361_upper_half",
+        "Erdos361.Statement.erdos361_odd_limit",
+        "Erdos361.Statement.erdos361_mod6_limit_low",
+        "Erdos361.Statement.erdos361_mod6_limit_high",
+        "Erdos361.Statement.erdos361_two_limit_points",
+        "Erdos361.Statement.inverse_s1",
+        "Erdos361.Statement.inverse_s2"
+    ],
+    "permitted_axioms": [
+        "propext",
+        "Quot.sound",
+        "Classical.choice"
+    ],
+    "definition_names": [
+        "Erdos361.Statement.Avoids",
+        "Erdos361.Statement.Avoiders",
+        "Erdos361.Statement.F",
+        "Erdos361.Statement.Fc"
+    ],
+    "enable_nanoda": false
+}
